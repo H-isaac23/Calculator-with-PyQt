@@ -65,11 +65,18 @@ class MainWindow(qtw.QWidget):
             self.result_field.setText(temp_string)
 
     def func_press(self, operator):
-        temp_string = ''.join(self.temp_nums)
-        self.fin_nums.append(temp_string)
-        self.fin_nums.append(operator)
+        if self.temp_nums != []:
+            temp_string = ''.join(self.temp_nums)
+            self.fin_nums.append(temp_string)
+        if self.fin_nums == []:
+            self.fin_nums.append(operator)
+        elif self.fin_nums[-1] not in "+-/*" and self.fin_nums != []:
+            self.fin_nums.append(operator)
+        elif self.fin_nums[-1] in "+-/*":
+            self.fin_nums[-1] = operator
         self.temp_nums = []
         self.result_field.setText(''.join(self.fin_nums))
+
 
     def func_result(self):
         fin_string = ''.join(self.fin_nums) + ''.join(self.temp_nums)
